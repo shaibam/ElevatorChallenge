@@ -12,9 +12,9 @@ img {
 .elevator {
     --speed-per-floor:.5s;
     --stall-time-on-arrival : 2s;
-    transition: transform calc( var(--speed-per-floor) * var(--floors-to-travel-abs) );
+    transition: transform calc( var(--speed-per-floor) * var(--floors-to-travel) );
 }
 
 .elevator.go {
-    transform:translate3d(0px , calc( var(--floors-to-travel) * var(--floor-computed-height) ) , 0px)
+    transform:translate3d(0px , calc( var(--target-floor) * var(--floor-computed-height) ) , 0px)
 }
