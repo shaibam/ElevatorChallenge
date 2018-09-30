@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import Pic from './elv.png';
+import './Elevator.css'
 function mapStateToProps(state) {
     return {
 
@@ -8,10 +9,16 @@ function mapStateToProps(state) {
 }
 
 class Elevator extends Component {
+    state = {
+        go: true
+    }
+    handleClick = () => {
+        this.setState({ go: true })
+    }
     render() {
         return (
-            <div>
-                Elevator
+            <div className='shaft'>
+                <img className={`elevator ${this.state.go ? 'go' : ''}`} src={Pic} alt='elevator' style={{ '--floors-to-travel': 5, '--floors-to-travel-abs':5 }} onClick={this.handleClick} />
             </div>
         );
     }

@@ -16,16 +16,20 @@ const mapActionsToProps = {
 }
 
 class Floor extends Component {
-    onFloorButtonChanged = (state) => {
-        console.log('onFloorButtonChanged', this.props)
+    state = {
+        waiting: false
+    }
+
+    onCallElevator = (state) => {
         this.props.onCallElevator(this.props.index)
+        this.setState({ waiting: true })
     }
 
     render() {
         return (
             <div className="floor">
                 <div className="floor-hall">
-                    <CallerButton index={this.props.index} onChange={this.onFloorButtonChanged} />
+                    <CallerButton index={this.props.index} selected={this.state.waiting} onChange={this.onCallElevator} />
                 </div >
                 <Ceiling />
             </div>

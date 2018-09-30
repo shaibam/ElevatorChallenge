@@ -11,7 +11,7 @@ class CallerButton extends Component {
 
     render() {
         return (
-            <button className={`metal linear ${this.state.selected && "selected"}`} onClick={this.toggle}>  {this.props.index}</button>
+            <button className={`metal linear ${this.state.selected && "selected"}`}  onClick={this.toggle} disabled={this.state.selected}>  {this.props.index}</button>
         );
     }
 }

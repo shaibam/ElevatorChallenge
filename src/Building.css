@@ -1,0 +1,11 @@
+:root {
+  --floor-width: 110px;
+  --ceiling-height: 7px;
+  --floor-computed-height : calc( var(--ceiling-height) + var(--floor-width) );
+}
+
+
+.building {
+  display: inline-grid;
+  grid-template-columns: var(--floor-width) var(--floor-width);
+}

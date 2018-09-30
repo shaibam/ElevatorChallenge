@@ -1,0 +1,20 @@
+.shaft {
+    display: block;
+    position: relative;
+    background: lightgray;
+}
+
+img {
+    height: var(--floor-width);
+    position: absolute;
+}
+
+.elevator {
+    --speed-per-floor:.5s;
+    --stall-time-on-arrival : 2s;
+    transition: transform calc( var(--speed-per-floor) * var(--floors-to-travel-abs) );
+}
+
+.elevator.go {
+    transform:translate3d(0px , calc( var(--floors-to-travel) * var(--floor-computed-height) ) , 0px)
+}
