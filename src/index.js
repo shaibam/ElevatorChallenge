@@ -6,20 +6,18 @@ import registerServiceWorker from './registerServiceWorker';
 
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import ProductsReducer from './reducers/ProductsReducer';
-import UsersReducer from './reducers/UsersReducer';
+import CallerReducer from './reducers/CallerReducer';
 
 const allReducers = combineReducers({
-    products: ProductsReducer,
-    user: UsersReducer
+    caller: CallerReducer
 })
 
-const store = createStore(allReducers,
-    { products: [{ name: 'iphone' }], user: 'Me' },
+const store = createStore(allReducers,{},window.devToolsExtension && window.devToolsExtension())
+/*,
+    { caller: 0 },
     window.devToolsExtension && window.devToolsExtension());
+*/
+console.log('store', store.getState());
 
-
-console.log(store.getState());
-
-ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();

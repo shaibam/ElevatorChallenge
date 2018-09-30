@@ -1,43 +1,45 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Floor from './Floor/Floor';
 import { connect } from 'react-redux';
-import { UpdateUser } from './actions/user-actions'
 
 const mapStateToProps = (state) => {
   return {
-    products: state.products,
-    user: state.user
+    caller: state.caller
   }
-}
-
+} 
+/*
 const mapActionsToProps = {
   onUpdateUser: UpdateUser
-
-}
+}*/
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+    //console.log('props', this.props)
+    //console.log('state', this.state)
+  }
+
   onUpdateUser = (e) => {
-    this.props.onUpdateUser(e.target.value)
+    //this.props.onUpdateUser(e.target.value)
   }
 
   render() {
-    console.log('render', this.props)
+    console.log('render')
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        {this.props.floors}
         <input onChange={this.onUpdateUser}></input>
-        <div>{this.props.user}</div>
+        <div>{this.props.caller}</div>
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(App);
+App.propTypes = { floors: React.Component };
+App.defaultProps = {
+  floors: Array(10).fill('').map((v, i) => { return <Floor key={`Floor.${i}`} index={i}/>}).reverse()
+}
+
+export default connect(mapStateToProps)(App);
