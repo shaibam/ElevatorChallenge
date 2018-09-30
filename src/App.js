@@ -4,6 +4,7 @@ import Floor from './Floor/Floor';
 import { connect } from 'react-redux';
 import { CallElevator } from './actions/caller-actions';
 import { UpdateUser } from './actions/user-actions'
+import PropTypes from 'prop-types';
 
 const mapStateToProps = (state) => {
   console.log('mapStateToProps', state)
@@ -55,7 +56,7 @@ class App extends Component {
   }
 }
 
-//App.propTypes = { floors: React.Component, caller: String, user: String };
+App.propTypes = { floors: PropTypes.array};
 App.defaultProps = {
   floors: Array(10).fill('').map((v, i) => { return <Floor key={`Floor.${i}`} index={i} /> }).reverse()
 }
