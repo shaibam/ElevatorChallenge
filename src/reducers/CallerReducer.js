@@ -1,10 +1,10 @@
 import { CALL_ELEVATOR } from '../actions/caller-actions';
 
-const CallerReducer = (state = 0, { type, payload }) => {
-    console.log('CallerReducer',type,payload)
+const CallerReducer = (state = '', { type, payload }) => {
+    console.log('CallerReducer',type,payload,CALL_ELEVATOR)
     switch (type) {
         case CALL_ELEVATOR:
-            return {index:payload.index}
+            return payload.caller
         default:
             return state
     }

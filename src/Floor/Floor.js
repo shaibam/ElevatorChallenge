@@ -12,8 +12,8 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps  = (dispatch) => {
-    return { onCallElevator: index => dispatch(CallElevator(index)) };
+const mapActionsToProps = {
+    onCallElevator: CallElevator
 }
 
 /*
@@ -23,6 +23,9 @@ const mapActionsToProps = {
 }*/
 
 class Floor extends Component {
+    constructor(props) {
+        super(props)
+    }
 
     onFloorButtonChanged = (state) => {
         console.log('onFloorButtonChanged', this.props)
@@ -45,4 +48,4 @@ class Floor extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps )(Floor);
+export default connect(mapStateToProps, mapActionsToProps)(Floor);

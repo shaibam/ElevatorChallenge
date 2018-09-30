@@ -7,12 +7,14 @@ import registerServiceWorker from './registerServiceWorker';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import CallerReducer from './reducers/CallerReducer';
+import UsersReducer from './reducers/UsersReducer';
 
 const allReducers = combineReducers({
-    caller: CallerReducer
+    caller: CallerReducer,
+    user:UsersReducer
 })
 
-const store = createStore(allReducers,{},window.devToolsExtension && window.devToolsExtension())
+const store = createStore(allReducers,{caller:0,user:'a'},window.devToolsExtension && window.devToolsExtension())
 /*,
     { caller: 0 },
     window.devToolsExtension && window.devToolsExtension());
@@ -20,4 +22,4 @@ const store = createStore(allReducers,{},window.devToolsExtension && window.devT
 console.log('store', store.getState());
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
-registerServiceWorker();
+//registerServiceWorker();
