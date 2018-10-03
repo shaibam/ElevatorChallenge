@@ -5,19 +5,24 @@ import './Floor.css'
 import { connect } from 'react-redux';
 import { CallElevator } from '../actions/caller-actions';
 
+
 const mapStateToProps = state => {
     return {
-        lastCaller: state.caller
+        lastCaller: state.caller,
     }
 }
 
 const mapActionsToProps = {
-    onCallElevator: CallElevator
+    onCallElevator: CallElevator,
 }
 
 class Floor extends Component {
     state = {
         waiting: false
+    }
+    
+    constructor(props) {
+        super(props);
     }
 
     onCallElevator = (state) => {
