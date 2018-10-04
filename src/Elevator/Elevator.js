@@ -27,16 +27,7 @@ class Elevator extends Component {
         this.props.onRegisterElevator(this.props.id)
     }
 
-    handleClick = () => {
-        let floor = Math.round(Math.random() * 9);
-        while (floor == this.state.floor) {
-            floor = Math.round(Math.random() * 9);
-        }
-        this.setState({ go: true, floor: floor, floorDistance: Math.abs(this.state.floor - floor) })
-    }
-
-    componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps')
+    componentWillReceiveProps(nextProps) {        
         if (nextProps.goTo != this.props.goTo)
             this.setState({
                 go: true,
@@ -45,19 +36,16 @@ class Elevator extends Component {
             })
     }
 
-
-    render() {
-        console.log('render', this.props.id, this.props);
+    render() {        
         return (
             <div className='shaft'>
-                <img className={`elevator ${this.state.go ? 'go' : ''}`} src={Pic} alt='elevator' style={{ '--target-floor': this.state.floor, '--floors-to-travel': this.state.floorDistance }} onClick={this.handleClick} />
+                <img className={`elevator ${this.state.go ? 'go' : ''}`} src={Pic} alt='elevator' style={{ '--target-floor': this.state.floor, '--floors-to-travel': this.state.floorDistance }} />
             </div>
         );
     }
 
     componentDidUpdate(prevProps, prevState) {
         setTimeout(() => {
-            console.log('componentDidUpdate arrived',this);
             this.props.onArrivedAtFloor(this.state.floor);
         }, (this.state.floorDistance * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL))
     }

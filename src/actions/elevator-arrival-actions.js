@@ -1,6 +1,5 @@
-export const ELEVATOR_ARRIVED = 'elevator:arrived'
-export const ElevatorArrived = (index) => {
-    console.log('ElevatorArrived')
+export const ELEVATOR_ARRIVED = 'call:arrived'
+export const ElevatorArrived = (index) => {    
     return {
         type: ELEVATOR_ARRIVED,
         payload:{

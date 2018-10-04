@@ -7,19 +7,12 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
   return {
-    caller: state.caller,
-    arrived: state.arrived
+    caller: state.caller.floor
   }
 }
 
-componentWillReceiveProps = (nextProps) => {
-  if (nextProps.arrived == this.props.arrived)
-    return false;
-}
-
 class App extends Component {
-  render() {
-    console.log('App render', this.props);
+  render() {    
     return (
       <div className="building">
         <div className="floors">
