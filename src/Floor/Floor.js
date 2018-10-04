@@ -5,10 +5,8 @@ import './Floor.css'
 import { connect } from 'react-redux';
 import { CallElevator } from '../actions/caller-actions';
 
-
 const mapStateToProps = state => {
     return {
-        lastCaller: state.caller,
     }
 }
 
@@ -29,8 +27,12 @@ class Floor extends Component {
         this.props.onCallElevator(this.props.index)
         this.setState({ waiting: true })
     }
+    
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.arrived) this.setState({waiting:false})
+    }    
 
-    render() {
+    render() {        
         return (
             <div className="floor">
                 <div className="floor-hall">

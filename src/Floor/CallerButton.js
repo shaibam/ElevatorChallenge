@@ -9,9 +9,14 @@ class CallerButton extends Component {
         this.props.onChange(selected);
     }
 
+    componentWillReceiveProps(nextProps) {        
+        if (!nextProps.selected) this.setState({ selected: nextProps.selected })
+    }
+
+
     render() {
         return (
-            <button className={`metal linear ${this.state.selected && "selected"}`}  onClick={this.toggle} disabled={this.state.selected}>  {this.props.index}</button>
+            <button className={`metal linear ${this.state.selected && "selected"}`} onClick={this.toggle} disabled={this.state.selected}> {this.props.index}</button>
         );
     }
 }

@@ -10,15 +10,22 @@ const CallerReducer = (state = 0, { type, payload }) => {
             let call = Object.create(CALL);
             call.floor = payload.caller;
             E.lastCall && (E.lastCall.next = call)
-            E.lastCall = call;
+            E.lastCall = call;            
             if (!E.currentCall) {
                 E.currentCall = call;
                 return E.currentCall;
             } else
                 return state;
         case ELEVATOR_ARRIVED:
-            E.currentCall.next && (E.currentCall = E.currentCall.next)
-            return E.currentCall
+            if (E.currentCall.next) {
+                E.currentCall = E.currentCall.next
+                return E.currentCall
+            } else {
+                E.currentCall = null;
+                E.lastCall = null;
+                return state;
+            }
+                
         default:
             return state
     }

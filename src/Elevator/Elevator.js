@@ -5,15 +5,17 @@ import './Elevator.css'
 import { RegisterElevator } from '../actions/elevator-list-actions';
 import { ElevatorArrived } from '../actions/elevator-arrival-actions';
 import { TIME_BETWEEN_FLOORS, TIME_TO_WAIT_ON_ARRIVAL } from '../consts/Movement';
+import { Floors } from '../consts/Floors';
+
 const mapStateToProps = state => {
     return {
-        
+
     };
 }
 
 const mapActionsToProps = {
     onRegisterElevator: RegisterElevator,
-    onArrivedAtFloor:ElevatorArrived
+    onArrivedAtFloor: ElevatorArrived
 }
 
 class Elevator extends Component {
@@ -27,7 +29,7 @@ class Elevator extends Component {
         this.props.onRegisterElevator(this.props.id)
     }
 
-    componentWillReceiveProps(nextProps) {        
+    componentWillReceiveProps(nextProps) {
         if (nextProps.goTo != this.props.goTo)
             this.setState({
                 go: true,
@@ -36,10 +38,10 @@ class Elevator extends Component {
             })
     }
 
-    render() {        
+    render() {
         return (
             <div className='shaft'>
-                <img className={`elevator ${this.state.go ? 'go' : ''}`} src={Pic} alt='elevator' style={{ '--target-floor': this.state.floor, '--floors-to-travel': this.state.floorDistance }} />
+                <img className={`elevator ${this.state.go ? 'go' : ''}`} src={Pic} alt='elevator' style={{ '--target-floor': Floors - this.state.floor - 1, '--floors-to-travel': this.state.floorDistance }} />
             </div>
         );
     }
