@@ -29,6 +29,7 @@ class Floor extends Component {
     }
     
     componentWillReceiveProps(nextProps) {
+        //console.log('componentWillReceiveProps',nextProps)
         if (nextProps.arrived) this.setState({waiting:false})
     }    
 

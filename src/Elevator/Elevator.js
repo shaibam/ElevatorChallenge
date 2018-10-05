@@ -29,7 +29,8 @@ class Elevator extends Component {
         this.props.onRegisterElevator(this.props.id)
     }
 
-    componentWillReceiveProps(nextProps) {
+    /*componentWillReceiveProps(nextProps) {
+        console.log('componentWillReceiveProps',nextProps )
         if (nextProps.goTo === null)
             return false
         if (nextProps.goTo != this.props.goTo)
@@ -38,19 +39,32 @@ class Elevator extends Component {
                 floor: nextProps.goTo,
                 floorDistance: Math.abs(this.state.floor - nextProps.goTo)
             })
+    }*/
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.goTo === null)
+            return false
+        return true
     }
 
+
     render() {
+        this.state = {
+            go: true,
+            floor: this.props.goTo,
+            floorDistance: Math.abs(this.state.floor - this.props.goTo)
+        }
         return (
             <div className='shaft'>
+                {/*<img className={`elevator ${this.state.go ? 'go' : ''}`} src={Pic} alt='elevator' style={{ '--target-floor': Floors - this.state.floor - 1, '--floors-to-travel': this.state.floorDistance }} />*/}
                 <img className={`elevator ${this.state.go ? 'go' : ''}`} src={Pic} alt='elevator' style={{ '--target-floor': Floors - this.state.floor - 1, '--floors-to-travel': this.state.floorDistance }} />
             </div>
         );
     }
 
     componentDidUpdate(prevProps, prevState) {
+        //console.log('componentDidUpdate', this.props.id)
         setTimeout(() => {
-            this.props.onArrivedAtFloor(this.state.floor);
+            this.props.onArrivedAtFloor({ floor: this.state.floor, elevatorId: this.props.id });
         }, (this.state.floorDistance * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL))
     }
 

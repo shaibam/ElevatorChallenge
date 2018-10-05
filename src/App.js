@@ -16,7 +16,7 @@ const mapStateToProps = state => {
 
 class App extends Component {
   render() {
-    console.log('App render', this.props.caller, this.props.elevatorId)
+    //console.log('App render', this.props.caller, this.props.elevatorId)
     return (
       <div className="building">
         <Floors />

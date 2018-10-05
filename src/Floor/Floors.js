@@ -6,24 +6,17 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     return {
-        arrived: state.arrived
+        arrived: state.arrived.floor
     }
 }
 
 class Floors extends Component {
     constructor(props) {
         super(props);
-        /*this.state =
-            { floors: Array(NumOfFloors).fill('').map((v, i) => { 
-                return <Floor key={`Floor.${i}`} index={i} arrived={this.props.arrived == i} /> 
-            }).reverse() 
-        }*/
-
-
     }
 
     render() {
-        //console.log('Floors render', this.props, this.state)
+        console.log('Floors render', this.props, this.state)
         return (
             <div className="floors">
                 {Array(NumOfFloors).fill('').map((v, i) => {

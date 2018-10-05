@@ -13,64 +13,38 @@ const CallerReducer = (state = 0, { type, payload }) => {
         case CALL_ELEVATOR:
             let call = Object.create(CALL);
             call.floor = payload.caller;
-            //console.log(Elevators.constructor)
-            /*console.log(Elevators.reduce((a,b,c,d)=>{
-                console.log(a,b,c,d)
-            }));*/
-            //console.log(Elevators.reduce((minIndex,value,index,arr)=> value.arrivalTime<arr[minIndex].arrivalTime ? index:minIndex))
-            /*timeToReachfloor(reducedValue[1].lastCall.floor,call.floor,reducedValue[1].lastCall.arrivalTime)
-            console.log(Object.entries(Elevators).reduce((reducedValue, value) =>
-                reducedValue[1].lastCall.arrivalTime < value[1].lastCall.arrivalTime ?
-                    reducedValue : value
-            ));*/
-            //timeToReachfloor(reducedValue[1].lastCall.floor, call.floor, reducedValue[1].lastCall.arrivalTime)
-            /* let elevatorId = Object.entries(Elevators).reduce((reducedElevator, elevator, i, arr) => {
-                 !reducedElevator[1].floor ?
-                     reducedElevator :
-                     !elevator[1].floor ?
-                         elevator :
-                         timeToReachfloor(reducedElevator[1].lastCall.floor, call.floor, reducedElevator[1].lastCall.arrivalTime) < timeToReachfloor(elevator[1].lastCall.floor, call.floor, elevator[1].lastCall.arrivalTime) ?
-                             reducedElevator : elevator
-             }
-             )[0];*/
             let elevatorData = Object.entries(Elevators).reduce((reducedElevator, elevator, i, arr) => {
-                //console.log(reducedElevator[1].lastCall)
-                /*if (!reducedElevator[1].arrivalTime) {
-                    reducedElevator[2] = timeToReachfloor(reducedElevator[1].lastCall.floor, call.floor, reducedElevator[1].lastCall.arrivalTime);
+                let reducedArrivalTime = timeToReachfloor(reducedElevator[1].lastCall.floor, call.floor, reducedElevator[1].lastCall.arrivalTime);
+                let elevatorArrivalTime = timeToReachfloor(elevator[1].lastCall.floor, call.floor, elevator[1].lastCall.arrivalTime);
+                if (reducedArrivalTime < elevatorArrivalTime) {
+                    reducedElevator[2] = reducedArrivalTime;
                     return reducedElevator
-                } else if (!elevator[1].arrivalTime) {
-                    elevator[2] = timeToReachfloor(elevator[1].lastCall.floor, call.floor, elevator[1].lastCall.arrivalTime);
+                } else {
+                    elevator[2] = elevatorArrivalTime;
                     return elevator;
-                } else {*/
-                    let reducedArrivalTime = timeToReachfloor(reducedElevator[1].lastCall.floor, call.floor, reducedElevator[1].lastCall.arrivalTime);
-                    let elevatorArrivalTime = timeToReachfloor(elevator[1].lastCall.floor, call.floor, elevator[1].lastCall.arrivalTime);
-                    if (reducedArrivalTime < elevatorArrivalTime) {
-                        reducedElevator[2] = reducedArrivalTime;
-                        return reducedElevator
-                    } else {
-                        elevator[2] = elevatorArrivalTime;
-                        return elevator;
-                    }
-                //}
+                }
             });
             call.arrivalTime = elevatorData[2];
-            call.elevatorId=elevatorData[0];
-            console.log('call',call)
+            call.elevatorId = elevatorData[0];
+
             E = Elevators[elevatorData[0]]
             E.lastCall && (E.lastCall.next = call)
             E.lastCall = call;
+
             if (!E.currentCall.arrivalTime) {
                 E.currentCall = call;
                 return E.currentCall
             } else
                 return state;
         case ELEVATOR_ARRIVED:
+            E = Elevators[payload.caller.elevatorId]
             if (E.currentCall.next) {
                 E.currentCall = E.currentCall.next
                 return E.currentCall
             } else {
-                E.currentCall = null;
-                E.lastCall = null;
+                E.currentCall = Object.create(CALL);
+                E.lastCall = Object.create(CALL);
+                E.lastCall.floor = payload.caller.floor;
                 return state;
             }
 
