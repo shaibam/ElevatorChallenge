@@ -3,9 +3,11 @@ import { ELEVATOR_ARRIVED } from '../actions/elevator-arrival-actions';
 import { Elevators } from './ElevatorListReducer';
 import { CALL } from '../consts/Call';
 import { TIME_BETWEEN_FLOORS, TIME_TO_WAIT_ON_ARRIVAL } from '../consts/Movement';
+
 const timeToReachfloor = (startTime, currentFloor, targetFloor) => {
-    return startTime + Math.abs(currentFloor - targetFloor) * TIME_BETWEEN_FLOORS
+    return TIME_TO_WAIT_ON_ARRIVAL + startTime + Math.abs(currentFloor - targetFloor) * TIME_BETWEEN_FLOORS
 }
+
 const CallerReducer = (state = 0, { type, payload }) => {
     //let E = Elevators['elevator.1'];
     let E;
@@ -14,8 +16,8 @@ const CallerReducer = (state = 0, { type, payload }) => {
             let call = Object.create(CALL);
             call.floor = payload.caller;
             let elevatorData = Object.entries(Elevators).reduce((reducedElevator, elevator, i, arr) => {
-                let reducedArrivalTime = timeToReachfloor(reducedElevator[1].lastCall.floor, call.floor, reducedElevator[1].lastCall.arrivalTime);
-                let elevatorArrivalTime = timeToReachfloor(elevator[1].lastCall.floor, call.floor, elevator[1].lastCall.arrivalTime);
+                let reducedArrivalTime = timeToReachfloor(reducedElevator[1].lastCall.arrivalTime, reducedElevator[1].lastCall.floor, call.floor);
+                let elevatorArrivalTime = timeToReachfloor(elevator[1].lastCall.arrivalTime, elevator[1].lastCall.floor, call.floor);
                 if (reducedArrivalTime < elevatorArrivalTime) {
                     reducedElevator[2] = reducedArrivalTime;
                     return reducedElevator
@@ -25,6 +27,7 @@ const CallerReducer = (state = 0, { type, payload }) => {
                 }
             });
             call.arrivalTime = elevatorData[2];
+
             call.elevatorId = elevatorData[0];
 
             E = Elevators[elevatorData[0]]

@@ -16,7 +16,6 @@ class Floors extends Component {
     }
 
     render() {
-        console.log('Floors render', this.props, this.state)
         return (
             <div className="floors">
                 {Array(NumOfFloors).fill('').map((v, i) => {

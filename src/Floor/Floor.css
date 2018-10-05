@@ -11,8 +11,8 @@
 	background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
   height: var(--floor-width);
   color: white;
-  font-weight: bold;
-
+	font-weight: bold;
+	text-align: center;
 }
 
 .ceiling {
@@ -20,4 +20,12 @@
 	width: 100%;
 	background: black;
   position: relative;
+}
+
+.counter {
+	color:black;	
+	font-size: 16px;
+	background-color: rgba(255,255,255,.7);
+	width:100%;
+	margin: 0 auto;
 }
