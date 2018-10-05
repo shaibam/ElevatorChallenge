@@ -1,1 +1,1 @@
-export const Floors = 10
+export const Floors = 6

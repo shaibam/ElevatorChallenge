@@ -6,6 +6,5 @@
 
 
 .building {
-  display: inline-grid;
-  grid-template-columns: var(--floor-width) var(--floor-width);
+  display: inline-flex;
 }

@@ -1,6 +1,10 @@
 .shaft {
     display: block;
     position: relative;
+    background: lightslategray;
+    width:var(--floor-width);   
+}
+.shaft:nth-child(odd) {
     background: lightgray;
 }
 

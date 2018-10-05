@@ -30,6 +30,8 @@ class Elevator extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.goTo === null)
+            return false
         if (nextProps.goTo != this.props.goTo)
             this.setState({
                 go: true,

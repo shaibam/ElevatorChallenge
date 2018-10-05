@@ -8,17 +8,22 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
   return {
-    caller: state.caller.floor
+    caller: state.caller.floor,
+    elevatorId: state.caller.elevatorId,
+    numOfElevators: 3
   }
 }
 
-class App extends Component {  
+class App extends Component {
   render() {
+    console.log('App render', this.props.caller, this.props.elevatorId)
     return (
       <div className="building">
-        <Floors/>        
-        <Elevator id="elevator.1" goTo={this.props.caller} />
-        {/*<Elevator id="elevator.2"/>*/}
+        <Floors />
+        {Array(this.props.numOfElevators).fill('').map((v, i) => {
+          let id = `elevator.${i}`;
+          return <Elevator key={id} id={id} goTo={this.props.elevatorId == id ? this.props.caller : null} />
+        })}
       </div>
     );
   }
