@@ -14,4 +14,4 @@ const RegisterElevator = (state = null, { type, payload }) => {
     }
 }
 
-export { RegisterElevator, Elevators }
+export { RegisterElevator, Elevators ,ELEVATOR}

@@ -35,15 +35,16 @@ class Floor extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.arrived) this.setState({ waiting: false })
-        console.log('nextProps.caller.arrivalTime',nextProps.caller.arrivalTime)
+        //console.log('nextProps.caller.arrivalTime',nextProps.caller.arrivalTime)
     }
 
     render() {
         return (
+
             <div className="floor">
                 <div className="floor-hall">
                     <CallerButton index={this.props.index} selected={this.state.waiting} onChange={this.onCallElevator} />
-                    <Counter id={this.props.index} time={this.props.arrived != this.props.index && this.props.caller.floor == this.props.index ? this.props.caller.arrivalTime : null} />
+                    <Counter id={this.props.index} time={this.props.caller.floor == this.props.index ? this.props.caller.arrivalTime : null} />
                 </div >
                 <Ceiling />
             </div>

@@ -35,14 +35,22 @@ class Elevator extends Component {
     }
 
     render() {
+        let distance = Math.abs(this.state.floor - this.props.goTo);
         this.state = {
             go: true,
             floor: this.props.goTo,
-            floorDistance: Math.abs(this.state.floor - this.props.goTo)
+            floorDistance: distance,
+            travelTime: (distance) * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL
         }
+
         return (
-            <div className='shaft'>              
-                <img className={`elevator ${this.state.go ? 'go' : ''}`} src={Pic} alt='elevator' style={{ '--target-floor': Floors - this.state.floor - 1, '--floors-to-travel': this.state.floorDistance }} />
+            <div className='shaft'>
+                <img className={`elevator ${this.state.go ? 'go' : ''}`} src={Pic} alt='elevator' style={
+                    {
+                        '--travel-time': (this.state.travelTime/1000) + 's',
+                        '--target-floor': Floors - this.state.floor - 1,
+                        '--floors-to-travel': this.state.floorDistance
+                    }} />
             </div>
         );
     }

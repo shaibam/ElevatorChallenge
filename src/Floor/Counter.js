@@ -17,12 +17,13 @@ class Counter extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-
+        /*if (nextProps.id==0)
+            console.log('nextProps.id',nextProps)*/
         if (!nextProps.time && !this.state.counting)
             return false
 
         if (!this.state.counting) {
-            console.log('this.props.time', this.props.time,nextProps.time)
+            //console.log('this.props.time', this.props.time,nextProps.time)
             this.state.time = nextProps.time;
             this.state.now = performance.now();
             //this.count();

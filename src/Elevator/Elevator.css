@@ -16,7 +16,8 @@ img {
 .elevator {
     --speed-per-floor:.5s;
     --stall-time-on-arrival : 2s;
-    transition: transform calc( var(--speed-per-floor) * var(--floors-to-travel) );
+    /*transition: transform calc( var(--speed-per-floor) * var(--floors-to-travel) );*/
+    transition: transform var(--travel-time);
 }
 
 .elevator.go {
