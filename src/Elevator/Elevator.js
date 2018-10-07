@@ -2,19 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Pic from './elv.png';
 import './Elevator.css'
-import { RegisterElevator } from '../actions/elevator-list-actions';
-import { ElevatorArrived } from '../actions/elevator-arrival-actions';
-import { TIME_BETWEEN_FLOORS, TIME_TO_WAIT_ON_ARRIVAL } from '../consts/Movement';
-import { Floors } from '../consts/Floors';
-
+import { TIME_BETWEEN_FLOORS, TIME_TO_WAIT_ON_ARRIVAL, NUM_OF_FLOORS } from '../consts/consts';
+import { RegisterElevator } from '../actions/elevator-actions';
 const mapStateToProps = state => {
     return {
+     
     };
 }
 
 const mapActionsToProps = {
     onRegisterElevator: RegisterElevator,
-    onArrivedAtFloor: ElevatorArrived
 }
 
 class Elevator extends Component {
@@ -47,8 +44,8 @@ class Elevator extends Component {
             <div className='shaft'>
                 <img className={`elevator ${this.state.go ? 'go' : ''}`} src={Pic} alt='elevator' style={
                     {
-                        '--travel-time': (this.state.travelTime/1000) + 's',
-                        '--target-floor': Floors - this.state.floor - 1,
+                        '--travel-time': (this.state.travelTime / 1000) + 's',
+                        '--target-floor': NUM_OF_FLOORS - this.state.floor - 1,
                         '--floors-to-travel': this.state.floorDistance
                     }} />
             </div>
@@ -56,11 +53,6 @@ class Elevator extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        //console.log(this.state.floorDistance * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL)
-        setTimeout(() => {
-            //console.log('onArrivedAtFloor');
-            this.props.onArrivedAtFloor({ floor: this.state.floor, elevatorId: this.props.id });
-        }, (this.state.floorDistance * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL))
     }
 
 }

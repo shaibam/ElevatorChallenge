@@ -1,34 +1,24 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Floors as NumOfFloors } from '../consts/Floors'
+import { NUM_OF_FLOORS } from '../consts/consts'
 import Floor from './Floor'
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     return {
-        arrived: state.arrived.floor
+        call: state.call
     }
 }
 
 class Floors extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="floors">
-                {Array(NumOfFloors).fill('').map((v, i) => {
-                    return <Floor key={`Floor.${i}`} index={i} arrived={this.props.arrived == i} />
+                {Array(NUM_OF_FLOORS).fill('').map((v, i) => {
+                    return <Floor key={`Floor.${i}`} index={i} arrived={this.props.arrived == i} called={this.props.call && this.props.call.floor == i} />
                 }).reverse()}
             </div>
         );
     }
-}
-
-Floors.propTypes = { floors: PropTypes.array };
-Floors.defaultProps = {
-    floors: Array(NumOfFloors).fill('').map((v, i) => { return <Floor key={`Floor.${i}`} index={i} /> }).reverse()
 }
 
 export default connect(mapStateToProps)(Floors);

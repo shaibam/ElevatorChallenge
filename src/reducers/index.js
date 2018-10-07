@@ -1,11 +1,7 @@
 import { combineReducers } from 'redux'
-import CallerReducer from './CallerReducer';
-import {RegisterElevator} from './ElevatorListReducer';
-import ElevatorArrived from './ElevatorArrivalReducer';
-import TimerReducer from './TimerReducer'
+import { RegisterElevator } from './elevator-reducer'
+import { RegisterCall} from './call-reducer'
 export default combineReducers({
-    elevators:RegisterElevator,
-    caller:CallerReducer,
-    arrived:ElevatorArrived,
-    tick:TimerReducer
+    elevators: RegisterElevator,
+    call:RegisterCall
 })
