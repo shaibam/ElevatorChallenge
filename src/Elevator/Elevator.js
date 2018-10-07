@@ -3,18 +3,20 @@ import { connect } from 'react-redux';
 import Pic from './elv.png';
 import './Elevator.css'
 import { TIME_BETWEEN_FLOORS, TIME_TO_WAIT_ON_ARRIVAL, NUM_OF_FLOORS } from '../consts/consts';
-import { RegisterElevator } from '../actions/elevator-actions';
+import { RegisterElevator, ElevatorArrived } from '../actions/elevator-actions';
 const mapStateToProps = state => {
     return {
-     
+
     };
 }
 
 const mapActionsToProps = {
     onRegisterElevator: RegisterElevator,
+    onArrivedAtFloor: ElevatorArrived
 }
 
 class Elevator extends Component {
+
     state = {
         go: true,
         floor: 0
@@ -23,6 +25,18 @@ class Elevator extends Component {
     constructor(props) {
         super(props);
         this.props.onRegisterElevator(this.props.id)
+    }
+
+    onArrivedAtFloor = (arrivalObject) => {
+       /* console.log(this.props)
+        if (this.props.obj.currentCall.next) {
+            this.props.obj.currentCall = this.props.obj.currentCall.next();
+            this.setState({ go: true, floor: this.props.obj.currentCall.floor })
+        } else {
+            this.setState({go:false,floor:this.props.obj.currentCall.floor})
+        }*/
+
+        this.props.onArrivedAtFloor(arrivalObject);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -37,7 +51,7 @@ class Elevator extends Component {
             go: true,
             floor: this.props.goTo,
             floorDistance: distance,
-            travelTime: (distance) * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL
+            travelTime: (distance) * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL,
         }
 
         return (
@@ -53,6 +67,9 @@ class Elevator extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        setTimeout(() => {
+            this.onArrivedAtFloor({ floor: this.state.floor, elevatorId: this.props.id });
+        }, (this.state.floorDistance * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL))
     }
 
 }

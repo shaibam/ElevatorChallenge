@@ -5,16 +5,17 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     return {
-        call: state.call
+        call: state.call,
+        arrived: state.arrived
     }
 }
 
 class Floors extends Component {
-    render() {
+    render() {        
         return (
             <div className="floors">
                 {Array(NUM_OF_FLOORS).fill('').map((v, i) => {
-                    return <Floor key={`Floor.${i}`} index={i} arrived={this.props.arrived == i} called={this.props.call && this.props.call.floor == i} />
+                    return <Floor key={`Floor.${i}`} index={i} arrived={this.props.arrived && this.props.arrived.floor == i} called={this.props.call && this.props.call.floor == i} />
                 }).reverse()}
             </div>
         );

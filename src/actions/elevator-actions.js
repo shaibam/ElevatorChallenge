@@ -7,3 +7,13 @@ export const RegisterElevator = (id) => {
         }
     }
 }
+
+export const ELEVATOR_ARRIVED = 'elevator:arrived'
+export const ElevatorArrived = (id) => {
+    return {
+        type: ELEVATOR_ARRIVED,
+        payload:{
+            id:id
+        }
+    }
+}

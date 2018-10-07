@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './Building.css';
 import Floors from './Floor/Floors';
-import Elevator from './Elevator/Elevator';
+import Elevators from './Elevator/Elevators';
 import { connect } from 'react-redux';
-import { NUM_OF_ELEVATORS } from './consts/consts'
+
 
 
 const mapStateToProps = state => {
@@ -18,10 +18,7 @@ class App extends Component {
     return (
       <div className="building">
         <Floors />
-        {Array(NUM_OF_ELEVATORS).fill('').map((v, i) => {
-          let id = `elevator.${i}`;
-          return <Elevator key={id} id={id} goTo={null} obj={this.props.elevators && this.props.elevators[`elevator.${i}`]} />
-        })}
+        <Elevators />
       </div>
     );
   }

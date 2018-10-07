@@ -1,8 +1,9 @@
 .shaft {
-    display: block;
+    display: inline-flex;
     position: relative;
     background: lightslategray;
-    width:var(--floor-width);   
+    width:var(--floor-width); 
+    height: 100%;  
 }
 .shaft:nth-child(odd) {
     background: lightgray;

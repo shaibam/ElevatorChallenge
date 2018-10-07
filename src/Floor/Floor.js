@@ -18,20 +18,23 @@ const mapActionsToProps = {
 
 class Floor extends Component {
     state = {
-        called: false
+        called: false,
+        arrived: false
     }
 
     onCallElevator = () => {
         this.props.onRegisteCall(this.props.index);
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (!this.state.called && nextProps.called)
+    shouldComponentUpdate(nextProps, nextState) {        
+        if ((!this.state.called && nextProps.called))
             this.state.called = true;
+        if (nextProps.arrived)
+            this.state.called = false;
         return true;
     }
 
-    render() {
+    render() {        
         return (
             <div className="floor">
                 <div className="floor-hall">
