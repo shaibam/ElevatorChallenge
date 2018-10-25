@@ -27,10 +27,13 @@ const RegisterCall = (state = null, { type, payload }) => {
             }
 
             call.elevatorId = elevatorData[0];
+
             Elevators[call.elevatorId].lastCall = call;
-            Elevators[call.elevatorId].lastCall.arrivalTime = elevatorData[2]
-            if (!Elevators[call.elevatorId].currentCall.next)
-                Elevators[call.elevatorId].currentCall.next = Elevators[call.elevatorId].lastCall
+            let c = Elevators[call.elevatorId].currentCall
+            while (c.next) {
+                c = c.next;
+            }
+            c.next = call;
             return call
         default:
             return state
