@@ -5,10 +5,10 @@ const CALL = {
     elevatorId: '',
 }
 
-const ELEVATOR = { lastCall: Object.create(CALL), currentCall: Object.create(CALL) };
+const ELEVATOR = () => { return { lastCall: Object.create(CALL), currentCall: Object.create(CALL) } };
 
-const NUM_OF_FLOORS = 6
-const NUM_OF_ELEVATORS = 1
+const NUM_OF_FLOORS = 9
+const NUM_OF_ELEVATORS = 3  
 
 const TIME_BETWEEN_FLOORS = 500;
 const TIME_TO_WAIT_ON_ARRIVAL = 2000;

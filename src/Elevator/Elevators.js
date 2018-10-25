@@ -20,7 +20,7 @@ class Elevators extends Component {
     }*/
 
     render() {
-        console.log('Elevatrs render',this.props.call )
+        //console.log('Elevatrs render',this.props.call )
         //goTo = (this.props.arrived && this.props.arrived.floor == i) ? null : goto;
         return (
             <div className="elevators">

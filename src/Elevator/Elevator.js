@@ -3,21 +3,16 @@ import { connect } from 'react-redux';
 import Pic from './elv.png';
 import './Elevator.css'
 import { TIME_BETWEEN_FLOORS, TIME_TO_WAIT_ON_ARRIVAL, NUM_OF_FLOORS } from '../consts/consts';
-import { RegisterElevator, ElevatorArrived } from '../actions/elevator-actions';
+import { RegisterElevator, ElevatorArrived, ElevatorDeparture } from '../actions/elevator-actions';
 
-var id;
 const mapStateToProps = state => {
-    /*let o={};
-    console.log('mapStateToProps',state)
-    if (state.call) o.call=state.call
-    return o*/
     return { call: state.call };
-    //return {};
 }
 
 const mapActionsToProps = {
     onRegisterElevator: RegisterElevator,
-    onArrivedAtFloor: ElevatorArrived
+    onArrivedAtFloor: ElevatorArrived,
+    onDepartureFromFloor: ElevatorDeparture
 }
 
 class Elevator extends Component {
@@ -29,23 +24,24 @@ class Elevator extends Component {
 
     constructor(props) {
         super(props);
-        this.props.onRegisterElevator(this.props.id)
-        id = this.props.id;
+        this.props.onRegisterElevator(this.props.id);
+
     }
 
     nextRide = () => {
 
         if (this.props.obj) {
-            console.log('nextRide', this.props.obj.currentCall.next)
+            //console.log('nextRide', this.props.obj.currentCall.next)
             if (this.props.obj.currentCall && this.props.obj.currentCall.next) {
-                //this.state.go = false;
                 this.props.obj.currentCall = this.props.obj.currentCall.next;
                 this.startRide(this.props.obj.currentCall.floor);
             }
         }
     }
+
     startRide = (floor) => {
-        //console.log('startRide')
+        //console.log('Elevator startRide')
+        this.props.onDepartureFromFloor({ floor: this.state.floor, elevatorId: this.props.id });
         let distance = Math.abs(this.state.floor - floor);
         this.setState({
             go: true,
@@ -56,40 +52,17 @@ class Elevator extends Component {
     }
 
     onArrivedAtFloor = (arrivalObject) => {
-        /* console.log(this.props)
-         if (this.props.obj.currentCall.next) {
-             this.props.obj.currentCall = this.props.obj.currentCall.next();
-             this.setState({ go: true, floor: this.props.obj.currentCall.floor })
-         } else {
-             this.setState({go:false,floor:this.props.obj.currentCall.floor})
-         }*/
-        console.log('onArrivedAtFloor', this.props.obj.currentCall)
-        /*this.state.go = false;
-        if (this.props.obj.currentCall && this.props.obj.currentCall.next) {
-            this.nextRide();
-            //this.startRide(this.props.obj.currentCall.floor);
-        }*/
-        this.setState({ go: false })
+        //console.log('Elevator arrive')
+        // console.log('onArrivedAtFloor', this.props.obj.currentCall)
         this.props.onArrivedAtFloor(arrivalObject);
+        this.setState({ go: false })
+        
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        console.log('shouldComponentUpdate', this.state.go, nextState.go)
+        //console.log('shouldComponentUpdate', this.state.go, nextState.go)
 
-        /*if (this.state.go) return false;
-        if (this.state.go != nextState.go && nextState.go)
-            return true;
- 
-        if (nextProps.call && !this.state.go) {
-            console.log('start nextRide');
-            this.nextRide();
-            return false;
-        }
- 
-        if (!nextState.go)
-            return false;
-        */
-        if (nextState.go != this.state.go && nextState.go)
+        if (nextState.go !== this.state.go && nextState.go)
             return true;
 
         if (!nextState.go) {
@@ -101,9 +74,9 @@ class Elevator extends Component {
     }
 
     render() {
-        console.log('render', this.state)
+        //console.log('render', this.state)
         return (
-            <div className='shaft'>
+            <div className='shaft' onClick={() => { console.log(this) }}>
                 <img className={`elevator ${this.state.go ? 'go' : ''}`} src={Pic} alt='elevator' style={
                     {
                         '--travel-time': (this.state.travelTime / 1000) + 's',
@@ -114,8 +87,11 @@ class Elevator extends Component {
         );
     }
 
+    componentDidMount() {
+        setTimeout(() => this.startRide(0), 1000);
+    }
+
     componentDidUpdate(prevProps, prevState) {
-        console.log('componentDidUpdate')
         setTimeout(() => {
             this.onArrivedAtFloor({ floor: this.state.floor, elevatorId: this.props.id });
         }, (this.state.floorDistance * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL))

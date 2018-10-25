@@ -8,7 +8,7 @@ const RegisterCall = (state = null, { type, payload }) => {
             let call = Object.create(CALL)
             let elevatorData
             call.floor = payload.id;
-
+            //console.log(Elevators)
             if (Object.keys(Elevators).length > 1) {
                 elevatorData = Object.entries(Elevators).reduce((reducedElevator, elevator, i, arr) => {
                     let reducedArrivalTime = timeToReachfloor(reducedElevator[1].lastCall.floor, call.floor, reducedElevator[1].lastCall.arrivalTime);
@@ -27,12 +27,13 @@ const RegisterCall = (state = null, { type, payload }) => {
             }
 
             call.elevatorId = elevatorData[0];
-
+            //console.log(' call.elevatorId', call.elevatorId)
             Elevators[call.elevatorId].lastCall = call;
             let c = Elevators[call.elevatorId].currentCall
             while (c.next) {
                 c = c.next;
             }
+            //console.log(Elevators)
             c.next = call;
             return call
         default:

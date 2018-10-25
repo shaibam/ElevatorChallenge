@@ -17,3 +17,13 @@ export const ElevatorArrived = (id) => {
         }
     }
 }
+
+export const ELEVATOR_DEPARTURE = 'elevator:departure'
+export const ElevatorDeparture = (id) => {
+    return {
+        type: ELEVATOR_DEPARTURE,
+        payload:{
+            id:id
+        }
+    }
+}
