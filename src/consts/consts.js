@@ -8,12 +8,13 @@ const CALL = {
 const ELEVATOR = () => { return { lastCall: Object.create(CALL), currentCall: Object.create(CALL) } };
 
 const NUM_OF_FLOORS = 9
-const NUM_OF_ELEVATORS = 3  
+const NUM_OF_ELEVATORS = 2  
 
 const TIME_BETWEEN_FLOORS = 500;
 const TIME_TO_WAIT_ON_ARRIVAL = 2000;
 
 const timeToReachfloor = (currentFloor, targetFloor, startTime) => {
+   // console.log('red',currentFloor, targetFloor)
     return startTime + TIME_TO_WAIT_ON_ARRIVAL + Math.abs(currentFloor - targetFloor) * TIME_BETWEEN_FLOORS
 }
 

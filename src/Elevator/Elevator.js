@@ -54,9 +54,19 @@ class Elevator extends Component {
     onArrivedAtFloor = (arrivalObject) => {
         //console.log('Elevator arrive')
         // console.log('onArrivedAtFloor', this.props.obj.currentCall)
+        if (!this.props.obj.currentCall.next) {
+            this.props.obj.lastCall.arrivalTime = 0;
+            this.props.obj.currentCall.arrivalTime = 0;
+            console.log('lastCall', this.props.id)
+        } else if (this.props.obj.currentCall.next) {
+            console.log('currentCall ', this.props.id);
+            console.log('currentCall a', this.props.obj.currentCall.next.arrivalTime)
+            this.props.obj.currentCall.next.arrivalTime -= this.props.obj.currentCall.arrivalTime;
+            console.log('currentCall b', this.props.obj.currentCall.next.arrivalTime)
+        }
+        
         this.props.onArrivedAtFloor(arrivalObject);
         this.setState({ go: false })
-        
     }
 
     shouldComponentUpdate(nextProps, nextState) {
