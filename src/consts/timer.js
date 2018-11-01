@@ -1,6 +1,6 @@
 import { Store } from './store';
 import { UpdateTime } from '../actions/timer-action'
-import TIMER_INTERVAL from '../consts/consts'
+import {TIMER_INTERVAL} from '../consts/consts'
 export default class Timer {
     constructor() {
         this.now = null;

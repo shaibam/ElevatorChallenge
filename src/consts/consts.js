@@ -25,4 +25,4 @@ const timeToReachfloor = (currentFloor, targetFloor, startTime) => {
 
 const NOW = performance.now();
 
-export { CALL, ELEVATOR, NUM_OF_FLOORS, NUM_OF_ELEVATORS, TIME_BETWEEN_FLOORS, TIME_TO_WAIT_ON_ARRIVAL, timeToReachfloor, NOW }
+export { CALL, ELEVATOR, NUM_OF_FLOORS, NUM_OF_ELEVATORS, TIME_BETWEEN_FLOORS, TIME_TO_WAIT_ON_ARRIVAL, timeToReachfloor, NOW, TIMER_INTERVAL }
