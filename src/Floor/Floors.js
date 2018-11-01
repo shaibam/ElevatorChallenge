@@ -13,14 +13,9 @@ const mapStateToProps = state => {
 
 
 class Floors extends Component {
-<<<<<<< HEAD
-    render() {        
-        //console.log('this.props.arrived',this.props.arrived)
-=======
 
     render() {
         //console.log(this.props.arrived,this.props.departed)
->>>>>>> b9e3cb89ed05e880ba569f10cbf333fe7891228a
         return (
             <div className="floors">
                 {Array(NUM_OF_FLOORS).fill('').map((v, i) => {
