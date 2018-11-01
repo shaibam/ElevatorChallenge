@@ -8,9 +8,10 @@ const RegisterCall = (state = null, { type, payload }) => {
             let call = Object.create(CALL)
             let elevatorData
             call.floor = payload.id;
-
+            //console.log(Elevators)
             if (Object.keys(Elevators).length > 1) {
                 elevatorData = Object.entries(Elevators).reduce((reducedElevator, elevator, i, arr) => {
+                    //console.log(reducedElevator[1].lastCall.arrivalTime,elevator[1].lastCall.arrivalTime)
                     let reducedArrivalTime = timeToReachfloor(reducedElevator[1].lastCall.floor, call.floor, reducedElevator[1].lastCall.arrivalTime);
                     let elevatorArrivalTime = timeToReachfloor(elevator[1].lastCall.floor, call.floor, elevator[1].lastCall.arrivalTime);
                     if (reducedArrivalTime < elevatorArrivalTime) {
@@ -28,10 +29,15 @@ const RegisterCall = (state = null, { type, payload }) => {
             }
 
             call.elevatorId = elevatorData[0];
+            call.arrivalTime = elevatorData[2]
+            ///console.log(' call', elevatorData[0],call.floor,elevatorData[2])
             Elevators[call.elevatorId].lastCall = call;
-            Elevators[call.elevatorId].lastCall.arrivalTime = elevatorData[2]
-            if (!Elevators[call.elevatorId].currentCall.next)
-                Elevators[call.elevatorId].currentCall.next = Elevators[call.elevatorId].lastCall
+            let c = Elevators[call.elevatorId].currentCall
+            while (c.next) {
+                c = c.next;
+            }
+            //console.log(Elevators)
+            c.next = call;
             return call
         default:
             return state
