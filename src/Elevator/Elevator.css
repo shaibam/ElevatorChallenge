@@ -18,6 +18,7 @@ img {
     --speed-per-floor:.5s;
     --stall-time-on-arrival : 2s;
     /*transition: transform calc( var(--speed-per-floor) * var(--floors-to-travel) );*/
+    transform:translate3d(0px , calc( var(--target-floor) * var(--floor-computed-height) ) , 0px);
     transition: transform var(--travel-time);
 }
 

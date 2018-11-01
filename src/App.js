@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
   return {
+    //
     elevators: state.elevators
   }
 }

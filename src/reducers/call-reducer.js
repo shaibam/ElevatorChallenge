@@ -23,6 +23,7 @@ const RegisterCall = (state = null, { type, payload }) => {
                 });
             } else {
                 elevatorData = Object.entries(Elevators)[0];
+                console.log('elevatorData ',elevatorData )
                 elevatorData[2] = timeToReachfloor(elevatorData[1].lastCall.floor, call.floor, elevatorData[1].lastCall.arrivalTime);
             }
 

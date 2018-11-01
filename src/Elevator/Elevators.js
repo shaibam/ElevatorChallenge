@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 const mapStateToProps = state => {
     return {
         call: state.call,
-        //arrived: state.arrived
+        //elevators: state.elevators,
+        arrived: state.arrived
     }
 }
 
@@ -19,16 +20,16 @@ class Elevators extends Component {
     }*/
 
     render() {
-
+        //console.log(this.props.elevators)
         //goTo = (this.props.arrived && this.props.arrived.floor == i) ? null : goto;
         return (
             <div className="elevators">
                 {Array(NUM_OF_ELEVATORS).fill('').map((v, i) => {
                     let id = `elevator.${i}`;
                     let goTo = (this.props.call && this.props.call.elevatorId == id) ? this.props.call.floor : null
-                    return <Elevator key={id} id={id}
-                        goTo={goTo}
-                        obj={this.props.elevators && this.props.elevators[`elevator.${i}`]} />
+                    //console.log(this.props.elevators,`elevator.${i}`)
+                    return <Elevator key={id} id={id} />
+                    //obj={this.props.elevators && this.props.elevators[`elevator.${i}`]} />
                 })}
             </div>
         );
