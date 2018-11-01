@@ -23,8 +23,8 @@ class Counter extends Component {
                 this.arrivalCountdown = -1;
             }
             return true;
-        }
-        console.log(nextProps.expectedArrivalTime)
+        }        
+       // console.log(nextProps.expectedArrivalTime);
         if (nextProps.expectedArrivalTime != 0) {
             this.arrivalCountdown = nextProps.expectedArrivalTime;
         }

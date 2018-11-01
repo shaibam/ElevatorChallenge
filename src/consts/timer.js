@@ -1,5 +1,6 @@
 import { Store } from './store';
 import { UpdateTime } from '../actions/timer-action'
+import TIMER_INTERVAL from '../consts/consts'
 export default class Timer {
     constructor() {
         this.now = null;
@@ -15,6 +16,6 @@ export default class Timer {
             } else
                 this.now = performance.now();
             this.runTimer();
-        }, 1000)
+        }, TIMER_INTERVAL)
     }
 }
