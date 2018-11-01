@@ -16,7 +16,7 @@ const NUM_OF_ELEVATORS = 1
 const TIME_BETWEEN_FLOORS = 500;
 const TIME_TO_WAIT_ON_ARRIVAL = 2000;
 
-const TIMER_INTERVAL = 100
+const TIMER_INTERVAL = 50
 
 const timeToReachfloor = (currentFloor, targetFloor, startTime) => {
     // console.log('red',currentFloor, targetFloor)
