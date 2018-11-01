@@ -7,10 +7,16 @@ import { connect } from 'react-redux';
 import { RegisterCall } from '../actions/call-actions'
 
 
-const mapStateToProps = state => {
-    return {
-        //call: state.call
-    }
+const mapStateToProps = (state, ownProps) => {
+    /*if (state.arrived) {
+        console.log('mapStateToProps', state)
+    }*/
+    let o = {};
+    if (state.arrived && state.arrived.floor == ownProps.index)
+        o.arrived = state.arrived;
+    if (state.departed && (state.departed.floor == ownProps.index || state.departed.toFloor == ownProps.index))
+        o.departed = state.departed;
+    return o
 }
 
 const mapActionsToProps = {
@@ -26,39 +32,41 @@ class Floor extends Component {
     constructor(props) {
         super(props);
         this.elevators = [];
+        this.expectedArrivalTime = 0;
     }
+
     onCallElevator = () => {
         if (!this.props.arrived)
             this.props.onRegisteCall(this.props.index);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        //if (this.props.index == 1)
-          //  console.log('nextProps.departed', nextProps.departed, nextProps.arrived)
-        let i = this.elevators.indexOf(nextProps.departed);
-        if (i != -1) {
-            this.elevators.splice(i, 1)
-        }
 
-        if (nextProps.arrived) {
-            i = this.elevators.indexOf(nextProps.arrived);
-            if (i == -1) {
-                this.elevators.push(nextProps.arrived)
+        if (nextProps.departed) {
+            if (nextProps.departed.floor == this.props.index && nextProps.departed.elevatorId) {
+                let i = this.elevators.indexOf(nextProps.departed.elevatorId);
+                if (i != -1) {
+                    this.elevators.splice(i, 1)
+                }
+            } else if (nextProps.departed.toFloor == this.props.index && nextProps.departed.elevatorId) {
+                this.expectedArrivalTime = nextProps.departed.travelTime;
+                //console.log('this.expectedArrivalTime',this.expectedArrivalTime)
             }
         }
 
-        //console.log('shouldComponentUpdate elevators', nextProps.arrived, nextProps.departed, this.elevators, this.props.index)
+        if (nextProps.arrived && nextProps.arrived.floor == this.props.index) {
+            let i = this.elevators.indexOf(nextProps.arrived.elevatorId);
+            if (i == -1) {
+                this.elevators.push(nextProps.arrived).elevatorId
+            }
+        }
 
-        /*if (!this.state.called && nextProps.called)
-            this.state.called = true;
-        if (nextProps.arrived)
-            this.state.called = false;*/
         return true;
     }
 
     render() {
         //if (this.props.index == 1)
-          //  console.log('this.elevators.length', this.elevators.length, this.props.index);
+        //  console.log('this.elevators.length', this.elevators.length, this.props.index);
         return (
             <div className="floor">
                 <div className="floor-hall">
@@ -66,7 +74,7 @@ class Floor extends Component {
                         deselect={this.elevators.length != 0}
                         onChange={this.onCallElevator}
                         disabled={this.elevators.length != 0} />
-                    <Counter id={this.props.index} time={null} />
+                    <Counter id={this.props.index} expectedArrivalTime={this.expectedArrivalTime} />
                 </div >
                 <Ceiling />
             </div>

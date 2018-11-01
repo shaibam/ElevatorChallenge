@@ -9,21 +9,21 @@ export const RegisterElevator = (id) => {
 }
 
 export const ELEVATOR_ARRIVED = 'elevator:arrived'
-export const ElevatorArrived = (id) => {
+export const ElevatorArrived = (arrival) => {
     return {
         type: ELEVATOR_ARRIVED,
         payload:{
-            id:id
+            arrival
         }
     }
 }
 
 export const ELEVATOR_DEPARTURE = 'elevator:departure'
-export const ElevatorDeparture = (id) => {
+export const ElevatorDeparture = (departure) => {
     return {
         type: ELEVATOR_DEPARTURE,
         payload:{
-            id:id
+            departure
         }
     }
 }

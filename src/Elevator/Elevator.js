@@ -6,7 +6,10 @@ import { TIME_BETWEEN_FLOORS, TIME_TO_WAIT_ON_ARRIVAL, NUM_OF_FLOORS } from '../
 import { RegisterElevator, ElevatorArrived, ElevatorDeparture } from '../actions/elevator-actions';
 
 const mapStateToProps = state => {
-    return { call: state.call };
+    return {
+        call: state.call,
+        timePassed: state.timePassed
+    };
 }
 
 const mapActionsToProps = {
@@ -21,6 +24,8 @@ class Elevator extends Component {
         go: false,
         floor: 5
     }
+
+    arrivalCountdown = -1;
 
     constructor(props) {
         super(props);
@@ -41,13 +46,16 @@ class Elevator extends Component {
 
     startRide = (floor) => {
         //console.log('Elevator startRide')
-        this.props.onDepartureFromFloor({ floor: this.state.floor, elevatorId: this.props.id });
         let distance = Math.abs(this.state.floor - floor);
+        let travelTime =  (distance) * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL;
+
+        this.props.onDepartureFromFloor({ floor: this.state.floor, elevatorId: this.props.id, toFloor: floor, travelTime});
+        
         this.setState({
             go: true,
             floor: floor,
             floorDistance: distance,
-            travelTime: (distance) * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL,
+            travelTime,
         })
     }
 
@@ -56,17 +64,24 @@ class Elevator extends Component {
         // console.log('onArrivedAtFloor', this.props.obj.currentCall)
         if (!this.props.obj.currentCall.next) {
             this.props.obj.lastCall.arrivalTime = 0;
-            this.props.obj.currentCall.arrivalTime = 0;            
-        } else if (this.props.obj.currentCall.next) {            
-            this.props.obj.currentCall.next.arrivalTime -= this.props.obj.currentCall.arrivalTime;            
+            this.props.obj.currentCall.arrivalTime = 0;
+        } else if (this.props.obj.currentCall.next) {
+            this.props.obj.currentCall.next.arrivalTime -= this.props.obj.currentCall.arrivalTime;
         }
-        
+
         this.props.onArrivedAtFloor(arrivalObject);
         this.setState({ go: false })
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        //console.log('shouldComponentUpdate', this.state.go, nextState.go)
+
+        if (this.arrivalCountdown != -1) {
+            this.arrivalCountdown -= nextProps.timePassed;
+            if (this.arrivalCountdown <= 0) {
+                this.arrivalCountdown = -1;
+                this.onArrivedAtFloor({ floor: this.state.floor, elevatorId: this.props.id })
+            }
+        }
 
         if (nextState.go !== this.state.go && nextState.go)
             return true;
@@ -98,9 +113,10 @@ class Elevator extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        setTimeout(() => {
+        /*setTimeout(() => {
             this.onArrivedAtFloor({ floor: this.state.floor, elevatorId: this.props.id });
-        }, (this.state.floorDistance * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL))
+        }, (this.state.floorDistance * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL))*/
+        this.arrivalCountdown = (this.state.floorDistance * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL);
     }
 
 }

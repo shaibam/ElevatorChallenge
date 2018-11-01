@@ -8,13 +8,14 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
   return {
-    elevators: state.elevators
+    elevators: state.elevators,
+    //timePassed: state.timePassed
   }
 }
 
 class App extends Component {
   render() {
-    //console.log('App', this.props)
+    //console.log('App', this.props.timePassed)
     return (
       <div className="building">
         <Floors />

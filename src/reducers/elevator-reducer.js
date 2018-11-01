@@ -19,7 +19,7 @@ export const ElevatorArrived = (state = null, { type, payload }) => {
     switch (type) {
         case ELEVATOR_ARRIVED:
             //console.log(' ELEVATOR_ARRIVED payload', payload)
-            return payload.id
+            return payload.arrival
         default:
             return null
     }
@@ -29,7 +29,7 @@ export const ElevatorDeparture = (state = null, { type, payload }) => {
     switch (type) {
         case ELEVATOR_DEPARTURE:
             //console.log(' ELEVATOR_DEPARTURE payload', payload)
-            return payload.id
+            return payload.departure
         default:
             return null
     }
