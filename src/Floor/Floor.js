@@ -44,7 +44,7 @@ class Floor extends Component {
 
         if (nextProps.departed) {
             if (nextProps.departed.floor == this.props.index && nextProps.departed.elevatorId) {
-                console.log('departed from',this.props.index,this.elevators)
+                //console.log('departed from',this.props.index,this.elevators)
                 let i = this.elevators.indexOf(nextProps.departed.elevatorId);
                 if (i != -1) {
                     this.elevators.splice(i, 1)
@@ -67,8 +67,8 @@ class Floor extends Component {
     }
 
     render() {
-        if (this.props.index == 2)
-            console.log('this.elevators.length', this.elevators.length, this.props.index);
+        /*if (this.props.index == 2)
+            console.log('this.elevators.length', this.elevators.length, this.props.index);*/
         return (
             <div className="floor">
                 <div className="floor-hall">

@@ -39,6 +39,7 @@ const RegisterCall = (state = null, { type, payload }) => {
             //c.next = call;
             Elevators[call.elevatorId].lastCall.next = call;
             Elevators[call.elevatorId].lastCall = Elevators[call.elevatorId].lastCall.next;
+            //console.log(Elevators[call.elevatorId].lastCall.arrivalTime)
             return call
         default:
             return state

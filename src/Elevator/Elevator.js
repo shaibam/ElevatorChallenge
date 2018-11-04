@@ -47,15 +47,15 @@ class Elevator extends Component {
     startRide = (floor) => {
         //console.log('Elevator startRide')
         let distance = Math.abs(this.state.floor - floor);
-        let travelTime =  (distance) * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL;
+        this.arrivalCountdown = (distance) * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL;
 
-        this.props.onDepartureFromFloor({ floor: this.state.floor, elevatorId: this.props.id, toFloor: floor, travelTime});
-        
+        this.props.onDepartureFromFloor({ floor: this.state.floor, elevatorId: this.props.id, toFloor: floor, travelTime: this.arrivalCountdown });
+
         this.setState({
             go: true,
             floor: floor,
             floorDistance: distance,
-            travelTime,
+            travelTime: this.arrivalCountdown,
         })
     }
 
@@ -100,9 +100,8 @@ class Elevator extends Component {
             <div className='shaft' onClick={() => { console.log(this) }}>
                 <img className={`elevator ${this.state.go ? 'go' : ''}`} src={Pic} alt='elevator' style={
                     {
-                        '--travel-time': (this.state.travelTime / 1000) + 's',
-                        '--target-floor': NUM_OF_FLOORS - this.state.floor - 1,
-                        '--floors-to-travel': this.state.floorDistance
+                        '--travel-time': ((this.state.travelTime - TIME_TO_WAIT_ON_ARRIVAL) / 1000) + 's',
+                        '--target-floor': NUM_OF_FLOORS - this.state.floor - 1
                     }} />
             </div>
         );
@@ -113,10 +112,7 @@ class Elevator extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        /*setTimeout(() => {
-            this.onArrivedAtFloor({ floor: this.state.floor, elevatorId: this.props.id });
-        }, (this.state.floorDistance * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL))*/
-        this.arrivalCountdown = (this.state.floorDistance * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL);
+        //this.arrivalCountdown = (this.state.floorDistance * TIME_BETWEEN_FLOORS + TIME_TO_WAIT_ON_ARRIVAL);        
     }
 
 }
